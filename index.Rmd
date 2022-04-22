@@ -1,0 +1,46 @@
+---
+title: "MIS Dashboard 2022"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+source("scripts/data_download.R")
+```
+
+Column {data-width=300}
+-----------------------------------------------------------------------
+
+### Last Submission Date {.value-box}
+
+```{r}
+valueBox(value = max(clean$SubmissionDate), 
+         caption = "Date of last submission", 
+         icon = "fas fa-calendar", 
+         color = "red")
+```
+
+### Last Interview Date {.value-box}
+
+```{r}
+valueBox(value = max(clean$date), 
+         caption = "Date of last interview", 
+         icon = "fas fa-calendar", 
+         color = "green")
+```
+
+
+Column {data-width=700}
+-----------------------------------------------------------------------
+
+### Tabulation by province
+
+```{r}
+clean %>% 
+  ggplot(aes(x = p_id, fill = p_id)) + 
+  geom_bar() + 
+  theme_classic()
+```
